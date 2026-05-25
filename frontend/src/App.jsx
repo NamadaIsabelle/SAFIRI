@@ -1,27 +1,51 @@
 import { useState } from "react";
 import TrafficMap from "./components/TrafficMap";
+import IncidentModal from "./components/IncidentModal";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [incidents, setIncidents] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [clickedLocation, setClickedLocation] = useState(null);
+
+  const [incidentData, setIncidentData] = useState({
+    type: "",
+    description: "",
+    priority: "Low",
+  });
 
   const handleMapClick = (event) => {
-  const incidentType = prompt(
-    "Incident Type (Accident, Breakdown, Congestion)"
-  );
+    setClickedLocation({
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng(),
+    });
 
-  if (!incidentType) return;
-
-  const newIncident = {
-    id: Date.now(),
-    type: incidentType,
-    lat: event.latLng.lat(),
-    lng: event.latLng.lng(),
-    location: "Nairobi",
+    setIsModalOpen(true);
   };
 
-  setIncidents((prev) => [...prev, newIncident]);
-};
+  const handleSubmitIncident = () => {
+    if (!incidentData.type || !clickedLocation) return;
+
+    const newIncident = {
+      id: Date.now(),
+      type: incidentData.type,
+      description: incidentData.description,
+      priority: incidentData.priority,
+      lat: clickedLocation.lat,
+      lng: clickedLocation.lng,
+    };
+
+    setIncidents((prev) => [...prev, newIncident]);
+
+    setIncidentData({
+      type: "",
+      description: "",
+      priority: "Low",
+    });
+
+    setClickedLocation(null);
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="flex min-h-screen bg-[#070816] text-white">
@@ -149,6 +173,15 @@ function App() {
           </div>
         </div>
       </main>
+
+<IncidentModal
+  isOpen={isModalOpen}
+  onClose={() => setIsModalOpen(false)}
+  onSubmit={handleSubmitIncident}
+  incidentData={incidentData}
+  setIncidentData={setIncidentData}
+/>
+
     </div>
   );
 }
