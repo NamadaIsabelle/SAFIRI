@@ -3,6 +3,15 @@ import TrafficMap from "./components/TrafficMap";
 import IncidentModal from "./components/IncidentModal";
 
 function App() {
+
+  const officers = [
+  "CBD Unit 14",
+  "Westlands Unit 8",
+  "Thika Road Unit 5",
+  "Industrial Area Unit 2",
+  "Kilimani Unit 7",
+  ];
+
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [incidents, setIncidents] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,6 +35,11 @@ function App() {
   const handleSubmitIncident = () => {
     if (!incidentData.type || !clickedLocation) return;
 
+    const randomOfficer =
+      officers[Math.floor(Math.random() * officers.length)];
+
+    const eta = Math.floor(Math.random() * 10) + 2;
+
     const newIncident = {
       id: Date.now(),
       type: incidentData.type,
@@ -33,6 +47,8 @@ function App() {
       priority: incidentData.priority,
       lat: clickedLocation.lat,
       lng: clickedLocation.lng,
+      assignedOfficer: randomOfficer,
+      eta,
     };
 
     setIncidents((prev) => [...prev, newIncident]);
@@ -123,7 +139,7 @@ function App() {
 
           <div className="rounded-3xl border border-cyan-500/20 bg-white/5 p-6">
             <h3 className="text-cyan-300">Officers Deployed</h3>
-            <p className="mt-4 text-5xl font-bold">38</p>
+            <p className="mt-4 text-5xl font-bold">{incidents.length}</p>
           </div>
 
           <div className="rounded-3xl border border-red-500/20 bg-white/5 p-6">
@@ -163,9 +179,27 @@ function App() {
                incidents.map((incident) => (
                  <div
                    key={incident.id}
-                   className="rounded-2xl bg-red-500/10 p-4 text-red-300"
+                   className={`rounded-2xl p-4 ${
+  incident.priority === "High"
+    ? "bg-red-500/10 text-red-300"
+    : incident.priority === "Medium"
+    ? "bg-yellow-500/10 text-yellow-300"
+    : "bg-cyan-500/10 text-cyan-300"
+}`}
                  >
-                   ⚠ {incident.type} reported
+                   <div>
+  <p className="font-semibold">
+    ⚠ {incident.type} — {incident.priority}
+  </p>
+
+  <p className="mt-1 text-sm opacity-80">
+    🚔 Assigned: {incident.assignedOfficer}
+  </p>
+
+  <p className="text-sm opacity-80">
+    📍 ETA: {incident.eta} mins
+  </p>
+</div>
                  </div>
                 ))
               )}

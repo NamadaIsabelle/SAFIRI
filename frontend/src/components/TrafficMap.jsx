@@ -44,15 +44,30 @@ function TrafficMap({ incidents, onMapClick }) {
           ],
         }}
       >
-        {incidents.map((incident) => (
-          <Marker
-            key={incident.id}
-            position={{
-              lat: incident.lat,
-              lng: incident.lng,
-            }}
-          />
-        ))}
+        {incidents.map((incident) => {
+          let markerColor;
+
+          if (incident.priority === "High") {
+            markerColor = "red";
+          } else if (incident.priority === "Medium") {
+            markerColor = "yellow";
+          } else {
+            markerColor = "blue";
+          }
+
+          return (
+            <Marker
+              key={incident.id}
+              position={{
+                lat: incident.lat,
+                lng: incident.lng,
+              }}
+              icon={{
+        url: `http://maps.google.com/mapfiles/ms/icons/${markerColor}-dot.png`,
+              }}
+            />
+          );
+        })}
       </GoogleMap>
     </LoadScript>
   );
