@@ -1,4 +1,10 @@
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  InfoWindow,
+} from "@react-google-maps/api";
+import { useState } from "react";
 
 const containerStyle = {
   width: "100%",
@@ -11,6 +17,8 @@ const center = {
 };
 
 function TrafficMap({ incidents, onMapClick }) {
+  const [selectedIncident, setSelectedIncident] = useState(null);
+
   return (
     <LoadScript
       googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
@@ -62,12 +70,54 @@ function TrafficMap({ incidents, onMapClick }) {
                 lat: incident.lat,
                 lng: incident.lng,
               }}
+              onClick={() => setSelectedIncident(incident)}
               icon={{
-        url: `http://maps.google.com/mapfiles/ms/icons/${markerColor}-dot.png`,
+                url: `http://maps.google.com/mapfiles/ms/icons/${markerColor}-dot.png`,
               }}
             />
           );
         })}
+        {selectedIncident && (
+  <InfoWindow
+    position={{
+      lat: selectedIncident.lat,
+      lng: selectedIncident.lng,
+    }}
+    onCloseClick={() => setSelectedIncident(null)}
+  >
+    <div className="min-w-[220px] text-black">
+      <h3 className="mb-2 text-lg font-bold">
+        🚨 Incident Details
+      </h3>
+
+      <p>
+        <strong>Type:</strong>{" "}
+        {selectedIncident.type}
+      </p>
+
+      <p>
+        <strong>Priority:</strong>{" "}
+        {selectedIncident.priority}
+      </p>
+
+      <p>
+        <strong>Officer:</strong>{" "}
+        {selectedIncident.assignedOfficer}
+      </p>
+
+      <p>
+        <strong>ETA:</strong>{" "}
+        {selectedIncident.eta} mins
+      </p>
+
+      <p className="mt-2">
+        <strong>Description:</strong>{" "}
+        {selectedIncident.description ||
+          "No description"}
+      </p>
+    </div>
+  </InfoWindow>
+)}
       </GoogleMap>
     </LoadScript>
   );
