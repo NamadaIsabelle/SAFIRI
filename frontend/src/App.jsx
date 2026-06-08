@@ -33,6 +33,7 @@ function App() {
   };
 
   const handleSubmitIncident = () => {
+
     if (!incidentData.type || !clickedLocation) return;
 
     const randomOfficer =
@@ -49,6 +50,12 @@ function App() {
       lng: clickedLocation.lng,
       assignedOfficer: randomOfficer,
       eta,
+      status: "Dispatched",
+
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     };
 
     setIncidents((prev) => [...prev, newIncident]);
@@ -62,6 +69,16 @@ function App() {
     setClickedLocation(null);
     setIsModalOpen(false);
   };
+
+  const resolveIncident = (id) => {
+      setIncidents((prev) =>
+        prev.map((incident) =>
+          incident.id === id
+            ? { ...incident, status: "Resolved" }
+            : incident
+        )
+      );
+    };
 
   return (
     <div className="flex min-h-screen bg-[#070816] text-white">
@@ -134,18 +151,30 @@ function App() {
         <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">
           <div className="rounded-3xl border border-purple-500/20 bg-white/5 p-6">
             <h3 className="text-purple-300">Active Incidents</h3>
-            <p className="mt-4 text-5xl font-bold">{incidents.length}</p>
+            <p className="mt-4 text-5xl font-bold">{
+  incidents.filter(
+    (incident) => incident.status !== "Resolved"
+  ).length
+}</p>
           </div>
 
           <div className="rounded-3xl border border-cyan-500/20 bg-white/5 p-6">
             <h3 className="text-cyan-300">Officers Deployed</h3>
-            <p className="mt-4 text-5xl font-bold">{incidents.length}</p>
+            <p className="mt-4 text-5xl font-bold">{
+  incidents.filter(
+    (incident) => incident.status !== "Resolved"
+  ).length
+}</p>
           </div>
 
           <div className="rounded-3xl border border-red-500/20 bg-white/5 p-6">
             <h3 className="text-red-300">Congestion Alerts</h3>
             <p className="mt-4 text-5xl font-bold">
-              {incidents.length}
+              {
+  incidents.filter(
+    (incident) => incident.status !== "Resolved"
+  ).length
+}
             </p>
           </div>
         </div>
@@ -178,7 +207,13 @@ function App() {
                   No incidents reported yet.
                 </p>
              ) : (
-               incidents.map((incident) => (
+               [...incidents]
+  .filter(
+    (incident) =>
+      incident.status !== "Resolved"
+  )
+  .reverse()
+  .map((incident) => (
                  <div
                    key={incident.id}
                    className={`rounded-2xl p-4 ${
@@ -189,7 +224,12 @@ function App() {
     : "bg-cyan-500/10 text-cyan-300"
 }`}
                  >
-                   <div>
+<div>
+
+  <p className="mb-2 text-xs opacity-60">
+    {incident.time}
+  </p>
+
   <p className="font-semibold">
     ⚠ {incident.type} — {incident.priority}
   </p>
@@ -200,6 +240,10 @@ function App() {
 
   <p className="text-sm opacity-80">
     📍 ETA: {incident.eta} mins
+  </p>
+
+  <p className="mt-2 text-sm">
+  🚦 Status: {incident.status}
   </p>
 
 <p className="mt-2 text-xs text-green-400">
@@ -225,7 +269,13 @@ function App() {
           </p>
         ) : (
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {incidents.map((incident) => (
+            { [...incidents]
+  .filter(
+    (incident) =>
+      incident.status !== "Resolved"
+  )
+  .reverse()
+  .map((incident) => (
               <div
                 key={incident.id}
                 className="rounded-2xl border border-cyan-500/20 bg-cyan-500/10 p-5 transition duration-300 hover:scale-[1.02] hover:border-cyan-400/40 hover:bg-cyan-500/15"
@@ -251,12 +301,24 @@ function App() {
                 </p>
 
                 <p className="mt-2 text-xs text-green-400">
-  ● Active Response
-</p>
+                   ● Active Response
+                </p>
 
                 <p className="mt-2 text-xs text-slate-500">
                   Priority: {incident.priority}
                 </p>
+
+                {incident.status !== "Resolved" && (
+                  <button
+                    onClick={() =>
+                      resolveIncident(incident.id)
+                    }
+                    className="mt-4 rounded-xl bg-green-500/20 px-4 py-2 text-sm text-green-300 transition hover:bg-green-500/30"
+                  >
+                    Resolve Incident
+                  </button>
+                )}
+
               </div>
             ))}
           </div>
