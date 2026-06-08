@@ -144,7 +144,9 @@ function App() {
 
           <div className="rounded-3xl border border-red-500/20 bg-white/5 p-6">
             <h3 className="text-red-300">Congestion Alerts</h3>
-            <p className="mt-4 text-5xl font-bold">7</p>
+            <p className="mt-4 text-5xl font-bold">
+              {incidents.length}
+            </p>
           </div>
         </div>
 
@@ -199,12 +201,68 @@ function App() {
   <p className="text-sm opacity-80">
     📍 ETA: {incident.eta} mins
   </p>
+
+<p className="mt-2 text-xs text-green-400">
+  ● Active Response
+</p>
+
 </div>
                  </div>
                 ))
               )}
             </div>
           </div>
+
+        {/* Officer Deployment */}
+        <div className="rounded-3xl border border-cyan-500/20 bg-white/5 p-6 lg:col-span-2">
+          <h3 className="mb-6 text-2xl font-semibold text-cyan-300">
+            Active Officer Deployment
+          </h3>
+
+        {incidents.length === 0 ? (
+          <p className="text-slate-500">
+            No officers deployed.
+          </p>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {incidents.map((incident) => (
+              <div
+                key={incident.id}
+                className="rounded-2xl border border-cyan-500/20 bg-cyan-500/10 p-5 transition duration-300 hover:scale-[1.02] hover:border-cyan-400/40 hover:bg-cyan-500/15"
+              >
+                <div className="mb-3 flex items-center gap-2">
+                  <div className="relative flex h-3 w-3">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+
+                    <span className="relative inline-flex h-3 w-3 rounded-full bg-green-400"></span>
+                  </div>
+
+                  <p className="font-semibold text-cyan-200">
+                  {incident.assignedOfficer}
+                  </p>
+                </div>
+
+                <p className="text-sm text-slate-300">
+                  Assigned → {incident.type}
+                </p>
+
+                <p className="mt-2 text-sm text-slate-400">
+                  ETA: {incident.eta} mins
+                </p>
+
+                <p className="mt-2 text-xs text-green-400">
+  ● Active Response
+</p>
+
+                <p className="mt-2 text-xs text-slate-500">
+                  Priority: {incident.priority}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+          
         </div>
       </main>
 
