@@ -1,175 +1,400 @@
-# SAFIRI
-### Smart Automated Flow, Incident Response, and Intelligence
+# 🚦 SAFIRI
 
-> An AI-powered traffic optimization system designed for Kenyan cities — built to reduce congestion, support traffic police, and improve commuter experience.
+## Smart Automated Flow, Incident Response & Intelligence
 
-![Status](https://img.shields.io/badge/status-prototype-yellow)
-![Context](https://img.shields.io/badge/context-Kenya-green)
-![Stack](https://img.shields.io/badge/stack-AI%20%7C%20Maps%20%7C%20Mobile-blue)
+> **An Intelligent Transport System (ITS) platform for smart traffic management, rapid incident response, and infrastructure simulation.**
 
 ---
 
-## The Problem
+# Overview
 
-Kenya's urban traffic system faces a compounding set of challenges:
+SAFIRI is a next-generation Intelligent Traffic Management System (ITMS) prototype designed to improve traffic operations, emergency response, and road safety within modern smart cities.
 
-- **Congestion** in cities like Nairobi, Mombasa, and Kisumu is driven by accidents, breakdowns, matatu overloads, and poorly distributed traffic management.
-- **Traffic police are understaffed, overworked, and underpaid** — managing high-volume intersections under harsh conditions with outdated communication tools.
-- When an obstacle (accident, stalled vehicle) blocks a road, there is no fast, automated way to alert nearby officers. The backup builds before anyone responds.
-- Inefficiency breeds frustration, which contributes to low morale, hostile behavior, and bribery.
+Unlike traditional navigation applications, SAFIRI focuses on the **traffic management layer**—providing a centralized command platform where operators can monitor road conditions, verify incidents, coordinate emergency response, and manage intelligent road infrastructure.
 
-Current solutions like Google Maps and Bolt/Uber address the driver-side experience but do nothing for the police coordination layer — the missing piece.
+The project is inspired by Kenya's ongoing Smart Traffic Management initiatives and explores how Artificial Intelligence, IoT, Computer Vision, and Digital Twins can improve urban mobility.
 
 ---
 
-## The Solution
+# Vision
 
-SAFIRI is an AI-powered traffic management prototype with two distinct user layers:
+SAFIRI aims to become a digital twin of a smart city's transport ecosystem by connecting:
 
-**For Traffic Police (Primary Users)**
-- Shift scheduling that distributes workload fairly and reduces burnout
-- Real-time incident alerts with pinpoint location when accidents or breakdowns are detected
-- Internal dashboard for deployment coordination and accountability logging
-- Faster communication replacing outdated radio systems
+- 🚦 Smart Traffic Signals
+- 📷 CCTV Cameras
+- 🚔 Traffic Police
+- 🚑 Emergency Services
+- 📡 IoT Road Sensors
+- 📱 Citizens
+- 🤖 Artificial Intelligence
 
-**For Drivers, Motorists & the Public (Secondary Users)**
-- Optimal route suggestions and real-time congestion warnings
-- Estimated arrival times and predicted wait times for major routes
-- Google Maps API integration for a familiar navigation experience
-- Accessible without requiring specialist knowledge or data-heavy usage
+into one intelligent platform capable of making rapid, evidence-based traffic management decisions.
 
 ---
 
-## System Architecture
+# Current Features
+
+## 🖥 Command Center Dashboard
+
+- Modern cyberpunk-inspired interface
+- Interactive Google Maps integration
+- Live traffic monitoring
+- Responsive layout
+- Collapsible navigation sidebar
+
+---
+
+## 🚨 Incident Management
+
+- Report incidents directly on the map
+- Priority classification
+  - High
+  - Medium
+  - Low
+- Automatic timestamps
+- Live incident feed
+- Incident history
+- Incident resolution workflow
+
+---
+
+## 🚔 Officer Deployment
+
+- Automatic officer assignment
+- Estimated response times (ETA)
+- Live deployment panel
+- Officer availability tracking
+- Incident resolution updates
+
+---
+
+## 📊 Live Statistics
+
+Dashboard statistics automatically update in real time:
+
+- Active incidents
+- Officers deployed
+- Congestion alerts
+
+---
+
+## 🗺 Interactive GIS Map
+
+- Google Maps API
+- Click-to-report incidents
+- Incident markers
+- Marker information windows
+- Live updates
+
+---
+
+# Incident Verification Engine (Planned)
+
+One of SAFIRI's primary goals is reducing false reports without slowing emergency response.
+
+Rather than immediately dispatching officers for every report, incidents move through a confidence-based verification system.
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                      DATA LAYER                         │
-│  - GPS data from vehicles and mobile apps               │
-│  - CCTV footage streams (existing Nairobi infrastructure)│
-│  - Driver-submitted incident reports                    │
-│  - Police deployment and shift records                  │
-└──────────────────────┬──────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────┐
-│                      AI ENGINE                          │
-│  - Traffic prediction (ML models on historical data)    │
-│  - Route optimization (least congested paths)           │
-│  - Incident detection (CCTV analysis + crowd reports)   │
-│  - Shift scheduling (fair workload distribution)        │
-└──────────────────────┬──────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────┐
-│                 COMMUNICATION LAYER                     │
-│  - Police dashboard: assignments, alerts, incident pins │
-│  - Public app: routes, ETAs, congestion warnings        │
-│  - Push alert system: notifies nearest officer on duty  │
-└──────────────────────┬──────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────┐
-│                  GOVERNANCE LAYER                       │
-│  - Privacy safeguards (officer identities not public)   │
-│  - Accountability logs (anonymized deployment history)  │
-│  - Anti-corruption checks (reduces bribery opportunities)│
-│  - Policy alignment (NTSA, county governments)          │
-└─────────────────────────────────────────────────────────┘
+Citizen Report
+      │
+      ▼
+Evidence Collection
+      │
+      ▼
+AI Verification Engine
+      │
+      ▼
+Confidence Score
+      │
+      ▼
+Dispatch Decision
+```
+
+The verification engine combines evidence from multiple independent sources before making decisions.
+
+### Evidence Sources
+
+- 📷 Uploaded photos
+- 🎥 Video evidence
+- 📍 GPS location
+- 🕒 Timestamp
+- 🚦 Traffic sensors
+- 📷 CCTV cameras
+- 🚗 Traffic flow analysis
+- 👥 Nearby citizen reports
+
+---
+
+## Confidence Levels
+
+| Confidence | Action |
+|------------|---------|
+| 0–30% | Monitor |
+| 30–60% | Request additional evidence |
+| 60–85% | Notify nearby officers |
+| 85–100% | Automatic dispatch |
+
+This allows SAFIRI to remain responsive while minimizing false positives.
+
+---
+
+## Reporter Trust Score
+
+Each citizen gradually earns a credibility score based on historical reports.
+
+Example:
+
+```
+Reports Submitted: 84
+
+Verified Reports: 81
+
+False Reports: 3
+
+Trust Score: 96%
+```
+
+Trusted users require less verification than new or unreliable reporters.
+
+---
+
+## AI Evidence Fusion (Future)
+
+Rather than relying on a single source, SAFIRI combines multiple inputs to estimate incident confidence.
+
+```
+Citizen Report
+        +
+Computer Vision
+        +
+Traffic Sensors
+        +
+GPS Density
+        +
+Nearby Reports
+        +
+Historical Traffic Data
+        +
+CCTV Analysis
+
+↓
+
+Confidence Score
+
+↓
+
+Dispatch Decision
 ```
 
 ---
 
-## Key Features
+# Smart Infrastructure Simulation
 
-### Incident Detection & Rapid Response
-When a breakdown, accident, or obstruction is detected — via CCTV analysis or a driver report — SAFIRI automatically generates a pinpoint alert and dispatches it to the nearest available traffic officer. Faster response means faster clearance, less buildup.
+SAFIRI will include a Digital Twin built using Autodesk Tinkercad to simulate intelligent road infrastructure.
 
-### AI Congestion Prediction
-Using historical traffic data, GPS signals, and live feeds, SAFIRI forecasts congestion hotspots before they peak — allowing proactive rerouting and police deployment rather than reactive management.
+Planned components include:
 
-### Police Shift Optimization
-Officers are assigned shifts based on demand forecasts and workload balancing. The system reduces double-deployments on low-traffic routes and under-deployment during peak hours.
+- 🚦 Smart Traffic Lights
+- 📷 CCTV Cameras
+- 🚗 Vehicle Detection Sensors
+- 🚶 Pedestrian Crossing Sensors
+- 🚨 Emergency Call Buttons
+- 🌧 Environmental Sensors
+- 📡 Traffic Density Sensors
+- 🪧 Variable Message Signs
 
-### Public Route Intelligence
-Drivers and passengers access optimal routes, live ETAs, and predicted wait times — integrated with the Google Maps API for a familiar, low-friction experience.
-
----
-
-## Prototype Scope
-
-This repository is a **prototype** — a proof of concept to demonstrate the core value of SAFIRI and attract investor or government interest for further development.
-
-**What the prototype will demonstrate:**
-- Google Maps API integration for routing
-- Simulated incident detection (using phone camera as CCTV proxy)
-- Basic congestion prediction model
-- Incident reporting and officer alert flow
-- Police dashboard (internal view)
-- Public view with major routes and ETAs
-
-**What is out of scope for the prototype:**
-- Full CCTV infrastructure integration
-- Live police deployment data
-- NTSA / government system integration
-- Production-grade scaling
+These devices will communicate with the backend in real time, allowing demonstrations of how smart infrastructure interacts with the command center.
 
 ---
 
-## Why Kenya
+# Artificial Intelligence Roadmap
 
-- Nairobi already has CCTV infrastructure in the CBD that SAFIRI can layer onto
-- Kenya's mobile-first culture makes app adoption natural
-- The problem is hyperlocal, visible, and unsolved by existing global tools
-- Aligns with Kenya's smart city ambitions (e.g., Konza Technopolis)
-- Traffic police welfare is a public conversation — there is political and social appetite for this
+Future AI capabilities include:
 
----
+- Accident detection
+- Vehicle detection
+- Traffic congestion prediction
+- Emergency vehicle recognition
+- Route optimization
+- Traffic signal optimization
+- Object detection
+- Predictive analytics
 
-## Roadmap
+Potential technologies:
 
-| Phase | Goal |
-|-------|------|
-| **Phase 1** | Build prototype — Google Maps API, basic AI model, incident alert system, police dashboard, public view |
-| **Phase 2** | Pilot in Nairobi CBD with a limited number of traffic police units |
-| **Phase 3** | Partner with NTSA and county governments for data access and scaling |
-| **Phase 4** | Expand to Mombasa, Kisumu; explore M-Pesa integration for sustainability |
-
----
-
-## Tech Stack (Prototype)
-
-| Component | Technology |
-|-----------|------------|
-| Routing & Maps | Google Maps API |
-| AI / ML | TensorFlow / Hugging Face (traffic prediction) |
-| Mobile App | TBD (React Native / Flutter) |
-| Backend | TBD |
-| CCTV Simulation | Phone camera (prototype phase) |
-| Dashboard | Web-based (React) |
+- OpenCV
+- YOLO
+- PyTorch
+- Hugging Face
+- Python
 
 ---
 
-## Impact
+# Technology Stack
 
-| Stakeholder | Benefit |
-|-------------|---------|
-| Traffic Police | Reduced workload, fairer shifts, faster communication, improved morale |
-| Drivers & Commuters | Faster routes, fewer jams, accurate ETAs |
-| Government | Transparency, reduced corruption, improved public trust |
-| Society | Safer roads, higher productivity, healthier urban living |
+## Frontend
+
+- React
+- Vite
+- Tailwind CSS
+- Google Maps API
+
+## Backend (In Progress)
+
+- FastAPI
+- PostgreSQL
+- REST API
+- WebSockets
+
+## Simulation
+
+- Autodesk Tinkercad
+- Arduino
+- Virtual IoT Sensors
+
+## AI
+
+- Python
+- OpenCV
+- YOLO
+- PyTorch
+- Hugging Face
 
 ---
 
-## Status
+# System Architecture
 
-🟡 **In Development — Prototype Stage**
+```
+                   Smart Infrastructure
 
-This project is being built as a prototype to validate the concept and demonstrate value to potential investors and government stakeholders.
+     Traffic Lights   CCTV   IoT Sensors   Citizens
+
+             │          │          │          │
+
+             └──────────┼──────────┘
+
+                        ▼
+
+             SAFIRI Verification Engine
+
+                        ▼
+
+                 FastAPI Backend
+
+                        ▼
+
+          SAFIRI Traffic Command Center
+
+      ┌──────────┬───────────┬──────────┐
+
+ Traffic Ops   Police Units  Emergency Services
+```
 
 ---
 
-## Author
+# Development Progress
 
-Built by a Kenyan developer solving a Kenyan problem.
+## ✅ Completed
+
+- Interactive dashboard
+- Google Maps integration
+- Incident reporting
+- Incident timeline
+- Officer assignment
+- Officer deployment
+- ETA estimation
+- Incident status workflow
+- Responsive cyberpunk UI
 
 ---
 
-*SAFIRI — Smart Automated Flow, Incident Response, and Intelligence*
+## 🚧 In Progress
+
+- Backend API
+- Database integration
+- User dashboard
+- Infrastructure simulation
+- Traffic light simulation
+
+---
+
+## 🔮 Planned
+
+- AI verification engine
+- Computer vision
+- IoT integration
+- Live sensor streaming
+- Mobile applications
+- Analytics dashboard
+- Predictive traffic modelling
+
+---
+
+# Roadmap
+
+## Phase 1
+
+- Dashboard
+- Google Maps
+- Incident Management
+- Officer Deployment
+
+## Phase 2
+
+- Backend API
+- Database
+- Smart Infrastructure Simulation
+- Traffic Signals
+
+## Phase 3
+
+- Computer Vision
+- AI Verification Engine
+- Traffic Prediction
+- Sensor Streaming
+
+## Phase 4
+
+- Mobile Applications
+- Citizen Portal
+- Smart City Digital Twin
+- Advanced Analytics
+
+---
+
+# Research Inspiration
+
+SAFIRI is inspired by modern Intelligent Transport Systems (ITS) being deployed globally and ongoing smart traffic initiatives in Kenya, including:
+
+- Intelligent Traffic Signal Systems
+- Centralized Traffic Management Centres
+- CCTV-assisted traffic monitoring
+- Smart city infrastructure
+- Connected road sensors
+
+The project explores how these technologies could be integrated into a unified platform.
+
+---
+
+# Disclaimer
+
+SAFIRI is an academic and research prototype.
+
+It is **not affiliated with or endorsed by**:
+
+- Kenya Urban Roads Authority (KURA)
+- National Transport and Safety Authority (NTSA)
+- National Police Service (NPS)
+- Nairobi City County
+
+References to these organizations are purely conceptual and intended for research and demonstration purposes.
+
+---
+
+# Author
+
+**Risper Namada**
+
+🇰🇪 Built in Kenya
+
+*"Designing intelligent transport systems for the future of African cities."*
