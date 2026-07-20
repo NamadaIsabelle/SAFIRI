@@ -9,42 +9,57 @@ import {
   Settings,
 } from "lucide-react";
 
+import { useState } from "react";
+
 const menuItems = [
   {
+    id: "dashboard",
     icon: LayoutDashboard,
     label: "Dashboard",
   },
   {
+    id: "operations",
     icon: Radio,
     label: "Operations",
   },
   {
+    id: "officers",
     icon: Shield,
     label: "Officers",
   },
   {
+    id: "cameras",
     icon: Camera,
     label: "Cameras",
   },
   {
+    id: "signals",
     icon: TrafficCone,
     label: "Traffic Signals",
   },
   {
+    id: "ai",
     icon: Cpu,
     label: "AI Engine",
   },
   {
+    id: "analytics",
     icon: BarChart3,
     label: "Analytics",
   },
   {
+    id: "settings",
     icon: Settings,
     label: "Settings",
   },
 ];
 
-export default function Sidebar() {
+
+
+export default function Sidebar({
+  activePage,
+  setActivePage,
+}) {
   return (
     <aside className="w-72 border-r border-slate-800 bg-[#0B1220]">
 
@@ -68,15 +83,18 @@ export default function Sidebar() {
 
           return (
             <button
-              key={item.label}
-              className="mb-2 flex w-full items-center gap-4 rounded-xl px-5 py-4 text-slate-300 transition hover:bg-purple-600/20 hover:text-white"
-            >
+  key={item.id}
+  onClick={() => setActivePage(item.id)}
+  className={`mb-2 flex w-full items-center gap-4 rounded-xl px-5 py-4 transition ${
+    activePage === item.id
+      ? "bg-purple-600 text-white shadow-lg shadow-purple-600/20"
+      : "text-slate-300 hover:bg-purple-600/20 hover:text-white"
+  }`}
+>
+  <Icon size={22} />
 
-              <Icon size={22} />
-
-              <span>{item.label}</span>
-
-            </button>
+  <span>{item.label}</span>
+</button>
           );
         })}
 
