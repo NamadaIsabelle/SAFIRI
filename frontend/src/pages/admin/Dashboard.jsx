@@ -1,19 +1,20 @@
 import { useState } from "react";
 
-import Header from "../components/layout/Header";
-import Sidebar from "../components/layout/Sidebar";
+import Header from "../../components/layout/Header";
+import Sidebar from "../../components/layout/Sidebar";
 
 import DashboardHome from "./DashboardHome";
+
 import Operations from "./Operations";
 import Officers from "./Officers";
 import Cameras from "./Cameras";
 import TrafficSignals from "./TrafficSignals";
-import AIEngine from "./AIEngine";
+import AIEngine from "../AIEngine";
 import Analytics from "./Analytics";
 import Settings from "./Settings";
 
-import IncidentModal from "../components/modals/IncidentModal";
-
+import IncidentModal from "../../components/modals/IncidentModal";
+import incidentData from "../../data/incidents";
 export default function Dashboard() {
 
   // ===============================

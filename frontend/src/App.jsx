@@ -1,10 +1,22 @@
 import Landing from "./pages/Landing";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NotFound from "./pages/NotFound";
-import Dashboard from "./pages/Dashboard";
-import CitizenHome from "./pages/CitizenHome";
+import Dashboard from "./pages/admin/Dashboard";
+import CitizenHome from "./pages/citizen/CitizenHome";
+import { useState } from "react";
+import Intro from "./components/Intro";
 
 function App() {
+  const [introFinished, setIntroFinished] = useState(false);
+
+  if (!introFinished) {
+  return (
+    <Intro
+      onFinish={() => setIntroFinished(true)}
+    />
+  );
+}
+
   return (
     <BrowserRouter>
 
