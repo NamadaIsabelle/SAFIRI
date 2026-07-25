@@ -4,39 +4,90 @@ import RoutePreview from "../../components/citizen/RoutePreview";
 import TrafficPulse from "../../components/citizen/TrafficPulse";
 import SAFICard from "../../components/citizen/SAFICard";
 import ReportCard from "../../components/citizen/ReportCard";
+import RouteMap from "../../components/citizen/RouteMap";
+import { LoadScript } from "@react-google-maps/api";
+import { useState } from "react";
+
+const libraries = ["places"];
 
 export default function CitizenHome() {
+  const [currentLocation, setCurrentLocation] = useState("");
+
+const [destination, setDestination] = useState("");
+
+const [travelMode, setTravelMode] = useState("DRIVING");
+
+const [directions, setDirections] = useState(null);
+
+const [distance, setDistance] = useState("");
+
+const [eta, setEta] = useState("");
   return (
-    <div className="min-h-screen bg-slate-100">
+    <LoadScript
+      googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
+      libraries={libraries}
+    >
+      <div className="min-h-screen bg-[#F8F8FC]">
 
-      <Navbar />
+        <Navbar />
 
-      <div className="mx-auto grid max-w-7xl gap-8 p-8 lg:grid-cols-3">
+        <div className="mx-auto max-w-7xl p-8">
 
-        {/* Left */}
+          <div className="grid gap-8 lg:grid-cols-2">
 
-        <div className="space-y-8">
+            <RoutePlanner
+  currentLocation={currentLocation}
+  setCurrentLocation={setCurrentLocation}
 
-          <RoutePlanner />
+  destination={destination}
+  setDestination={setDestination}
 
-          <TrafficPulse />
+  travelMode={travelMode}
+  setTravelMode={setTravelMode}
+/>
 
-        </div>
+            <RouteMap
+  currentLocation={currentLocation}
+  destination={destination}
+  travelMode={travelMode}
 
-        {/* Center */}
+  directions={directions}
+  setDirections={setDirections}
 
-        <div className="lg:col-span-2 space-y-8">
+  distance={distance}
+  setDistance={setDistance}
 
-          <RoutePreview />
+  eta={eta}
+  setEta={setEta}
+/>
 
-          <SAFICard />
+          </div>
 
-          <ReportCard />
+          <div className="mt-8 grid gap-8 lg:grid-cols-3">
+
+            <TrafficPulse />
+
+            <RoutePreview
+  distance={distance}
+  eta={eta}
+/>
+
+            <SAFICard
+  eta={eta}
+  distance={distance}
+/>
+
+          </div>
+
+          <div className="mt-8">
+
+            <ReportCard />
+
+          </div>
 
         </div>
 
       </div>
-
-    </div>
+    </LoadScript>
   );
 }

@@ -21,8 +21,9 @@ export default function LiveMap() {
   return (
     <div className="overflow-hidden rounded-3xl border border-slate-800 bg-[#0E1628]">
       <LoadScript
-        googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
-      >
+  googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
+  libraries={["places"]}
+>
         <GoogleMap
           mapContainerStyle={{
             width: "100%",
