@@ -1,7 +1,9 @@
 package com.safiri.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,47 +29,64 @@ public class IncidentController {
         this.incidentRepository = incidentRepository;
     }
 
+    // GET all incidents
     @GetMapping
     public List<Incident> getAllIncidents() {
         return incidentRepository.findAll();
     }
 
+    // GET one incident
     @GetMapping("/{id}")
-    public ResponseEntity<Incident> getIncident(@PathVariable Long id) {
-        return incidentRepository.findById(id)
+    public ResponseEntity<Incident> getIncidentById(@PathVariable Long id) {
+
+        Optional<Incident> incident = incidentRepository.findById(id);
+
+        return incident
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    // CREATE incident
     @PostMapping
-    public Incident createIncident(@RequestBody Incident incident) {
-        return incidentRepository.save(incident);
+    public ResponseEntity<Incident> createIncident(@RequestBody Incident incident) {
+
+        Incident savedIncident = incidentRepository.save(incident);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(savedIncident);
     }
 
+    // UPDATE incident
     @PutMapping("/{id}")
     public ResponseEntity<Incident> updateIncident(
             @PathVariable Long id,
             @RequestBody Incident updatedIncident) {
 
-        return incidentRepository.findById(id)
-                .map(existing -> {
+        Optional<Incident> existingIncident =
+                incidentRepository.findById(id);
 
-                    existing.setType(updatedIncident.getType());
-                    existing.setDescription(updatedIncident.getDescription());
-                    existing.setPriority(updatedIncident.getPriority());
-                    existing.setLatitude(updatedIncident.getLatitude());
-                    existing.setLongitude(updatedIncident.getLongitude());
-                    existing.setAssignedOfficer(updatedIncident.getAssignedOfficer());
-                    existing.setEta(updatedIncident.getEta());
-                    existing.setStatus(updatedIncident.getStatus());
+        if (existingIncident.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
 
-                    return ResponseEntity.ok(
-                            incidentRepository.save(existing)
-                    );
-                })
-                .orElse(ResponseEntity.notFound().build());
+        Incident incident = existingIncident.get();
+
+        incident.setType(updatedIncident.getType());
+        incident.setDescription(updatedIncident.getDescription());
+        incident.setPriority(updatedIncident.getPriority());
+        incident.setLatitude(updatedIncident.getLatitude());
+        incident.setLongitude(updatedIncident.getLongitude());
+        incident.setAssignedOfficer(updatedIncident.getAssignedOfficer());
+        incident.setEta(updatedIncident.getEta());
+        incident.setStatus(updatedIncident.getStatus());
+
+        Incident savedIncident = incidentRepository.save(incident);
+
+        return ResponseEntity.ok(savedIncident);
     }
 
+    // DELETE incident
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteIncident(@PathVariable Long id) {
 

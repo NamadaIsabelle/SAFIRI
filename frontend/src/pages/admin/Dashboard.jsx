@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Header from "../../components/layout/Header";
 import Sidebar from "../../components/layout/Sidebar";
 
 import DashboardHome from "./DashboardHome";
-
 import Operations from "./Operations";
 import Officers from "./Officers";
 import Cameras from "./Cameras";
@@ -14,7 +13,7 @@ import Analytics from "./Analytics";
 import Settings from "./Settings";
 
 import IncidentModal from "../../components/modals/IncidentModal";
-import incidentData from "../../data/incidents";
+
 export default function Dashboard() {
 
   // ===============================
@@ -38,6 +37,37 @@ export default function Dashboard() {
     description: "",
     priority: "Low",
   });
+
+  // ===============================
+  // Load incidents from backend
+  // ===============================
+
+  useEffect(() => {
+
+    fetch("http://localhost:8080/api/incidents")
+      .then((response) => {
+
+        if (!response.ok) {
+          throw new Error("Failed to load incidents");
+        }
+
+        return response.json();
+
+      })
+      .then((data) => {
+
+        console.log("Incidents loaded from backend:", data);
+
+        setIncidents(data);
+
+      })
+      .catch((error) => {
+
+        console.error("Error loading incidents:", error);
+
+      });
+
+  }, []);
 
   // ===============================
   // Map Click
